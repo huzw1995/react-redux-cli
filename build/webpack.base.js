@@ -78,7 +78,7 @@ module.exports = {
            * 单独处理 ant design less
            */
           {
-            test: /\.less$/,
+            test: /\.(css|less)$/,
             use: [{ loader: 'style-loader' }, 
                   { loader: 'css-loader' },
                   { loader: 'less-loader',
