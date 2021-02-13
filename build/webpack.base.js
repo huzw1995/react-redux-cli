@@ -143,13 +143,13 @@ module.exports = {
     // 在导入语句没带文件后缀时，Webpack 会自动带上后缀后去尝试访问文件是否存在。
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
     alias: {
-	  '@': resolve(__dirname, '../src'),
-	  '@mock': resolve(__dirname, '../mock'),
+      '@': resolve(__dirname, '../src'),
+      '@mock': resolve(__dirname, '../mock'),
       '@assets': resolve(__dirname, '../src/assets'),
       '@components': resolve(__dirname, '../src/components'),
       '@config': resolve(__dirname, '../src/config'),
       '@utils': resolve(__dirname, '../src/utils'),
-	  '@pages': resolve(__dirname, '../src/pages'),
+      '@pages': resolve(__dirname, '../src/pages'),
       '@styles': resolve(__dirname, '../src/styles'),
       '@router': resolve(__dirname, '../src/router'),
       '@redux': resolve(__dirname, '../src/redux'),
