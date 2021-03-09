@@ -30,7 +30,7 @@ React + React-Router + TS + JS + ant design + webpack4.0 脚手架
     │   ├── index.jsx               // 入口文件
     │   └── index.html
     ├── .eslintrc.js            // eslint 配置文件
-    ├── .prettierrc.json        // prettier 配置
+    ├── .prettierrc.js        // prettier 配置
     ├── .global.d.ts            // Typescript 全局声明
     ├── postcss.config.js       // postcss 配置
     └── tsconfig.json           // Typescript 配置
