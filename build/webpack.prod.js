@@ -1,22 +1,22 @@
-const baseConfig = require('./webpack.base.js');
-const { merge } = require('webpack-merge');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const baseConfig = require("./webpack.base.js");
+const { merge } = require("webpack-merge");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const OptimizeCssAssetsWebpackPlugin = require("optimize-css-assets-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = merge(baseConfig, {
-  mode: 'production', // 生产模式
-  devtool: 'cheap-module-source-map',
-  output:{
-    publicPath: './'
+  mode: "production", // 生产模式
+  devtool: "cheap-module-source-map",
+  output: {
+    publicPath: "./",
   },
   plugins: [
     new HtmlWebpackPlugin({
       // 指定生成的文件所依赖哪一个html文件模板，模板类型可以是html、jade、ejs等
-      template: './src/index.html',
-      favicon: './src/favicon.ico',
+      template: "./src/index.html",
+      favicon: "./src/favicon.ico",
       // 清除 html 一些没用的代码
       minify: {
         removeComments: true,
@@ -37,7 +37,7 @@ module.exports = merge(baseConfig, {
     new OptimizeCssAssetsWebpackPlugin({
       cssProcessPluginOptions: {
         preset: [
-          'default',
+          "default",
           {
             // 对注释的处理
             discardComments: { removeAll: true },
@@ -53,47 +53,48 @@ module.exports = merge(baseConfig, {
     //设置为 true, 一个 chunk 打包后就是一个文件，一个chunk对应`一些js css 图片`等
     runtimeChunk: true,
     minimize: true,
-    minimizer:[ 
-    //压缩js文件
-    new TerserPlugin({
-      terserOptions: {
-          cache:true,
+    minimizer: [
+      //压缩js文件
+      new TerserPlugin({
+        terserOptions: {
+          cache: true,
           parallel: true,
           compress: {
-              drop_console: true,
-              drop_debugger:true,
-              dead_code:true,
-              pure_funcs: ['console.log']
-          }
+            drop_console: true,
+            drop_debugger: true,
+            dead_code: true,
+            pure_funcs: ["console.log"],
+          },
           // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
-      }
-    })],
+        },
+      }),
+    ],
     splitChunks: {
-      chunks: 'async',
+      chunks: "async",
       minSize: 30000,
       minChunks: 1,
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
-      automaticNameDelimiter: '~', //名称分隔符，默认是~
+      automaticNameDelimiter: "~", //名称分隔符，默认是~
       name: true, //打包后的名称，默认是chunk的名字通过分隔符（默认是～）分隔
       cacheGroups: {
-          vendor: {
-              name: 'vendor',
-              chunks: 'initial',
-              priority: 10,
-              minChunks: 2, //最少被几个chunk引用
-              reuseExistingChunk: true, //  如果该chunk中引用了已经被抽取的chunk，直接引用该chunk，不会重复打包代码
-              test: /node_modules\/(.*)\.js/
-          },
-          styles: {
-              name: 'index',
-              test: /\.(less|css)$/,
-              chunks: 'all',
-              minChunks: 1,
-              reuseExistingChunk: true,
-              enforce: true
-          }
-      }
-    }
+        vendor: {
+          name: "vendor",
+          chunks: "initial",
+          priority: 10,
+          minChunks: 2, //最少被几个chunk引用
+          reuseExistingChunk: true, //  如果该chunk中引用了已经被抽取的chunk，直接引用该chunk，不会重复打包代码
+          test: /node_modules\/(.*)\.js/,
+        },
+        styles: {
+          name: "index",
+          test: /\.(less|css)$/,
+          chunks: "all",
+          minChunks: 1,
+          reuseExistingChunk: true,
+          enforce: true,
+        },
+      },
+    },
   },
 });

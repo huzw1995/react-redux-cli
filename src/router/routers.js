@@ -1,9 +1,9 @@
-import React from 'react';
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom';
-import loadable from '@utils/loadable';
+import React from "react";
+import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
+import loadable from "@utils/loadable";
 
-const Login = loadable(()=> import("@pages/login"))
-const Homepage = loadable(()=> import("@pages/homepage"))
+const Login = loadable(() => import("@pages/login"));
+const Homepage = loadable(() => import("@pages/homepage"));
 
 export default function Routers() {
   return (

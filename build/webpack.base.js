@@ -1,19 +1,19 @@
-const { resolve } = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HappyPack = require('happypack');
+const { resolve } = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HappyPack = require("happypack");
 
 module.exports = {
   entry: {
-    app: ['./src/index.jsx'], // 入口文件
-    vendors: ['react', 'react-dom', 'react-router-dom'], // 所引入的公共库
+    app: ["./src/index.jsx"], // 入口文件
+    vendors: ["react", "react-dom", "react-router-dom"], // 所引入的公共库
   },
   output: {
     // 对应于entry里面生成出来的文件名，
     // hash 标识，每次修改输出不同文件名，用于更新浏览器缓存文件，区分版本, 8 代表打包出来为 8位 字符串
-    filename: 'js/[name].[hash:6].js',
-    chunkFilename: 'js/[name]_chunk.[chunkhash:8].js',
-    path: resolve(__dirname, '../dist'), // 输出目录
+    filename: "js/[name].[hash:6].js",
+    chunkFilename: "js/[name]_chunk.[chunkhash:8].js",
+    path: resolve(__dirname, "../dist"), // 输出目录
   },
   module: {
     rules: [
@@ -25,7 +25,7 @@ module.exports = {
            */
           {
             test: /\.(html)$/,
-            loader: 'html-loader',
+            loader: "html-loader",
           },
           /**
            * 加入 babel-loader 解析包含ES6以上语法的 Javascript 文件和 Typescript文件
@@ -33,7 +33,7 @@ module.exports = {
           {
             test: /\.(js|jsx|ts|tsx)?$/,
             exclude: /node_modules/,
-            loader: 'happypack/loader?id=babel',
+            loader: "happypack/loader?id=babel",
           },
           /**
            * 加入 less-loader 解析 less 文件;
@@ -45,31 +45,32 @@ module.exports = {
             test: /\.(css|less)?$/,
             use: [
               // 将CSS提取为独立的文件的插件，对每个包含css的js文件都会创建一个CSS文件
-              process.env.NODE_ENV === 'production'
-			        ?
+              process.env.NODE_ENV === "production"
+                ? {
+                    loader: MiniCssExtractPlugin.loader,
+                    options: {
+                      publicPath: "../",
+                    },
+                  }
+                : {
+                    loader: "style-loader",
+                  },
               {
-                loader:MiniCssExtractPlugin.loader,
-                options:{
-                  publicPath:'../'
-                }
-              }:{
-                loader:'style-loader'
-              },
-              {
-                loader: 'css-loader',
+                loader: "css-loader",
                 options: {
                   modules: {
-                    localIdentName: '[name]_[local]_[hash:base64:6]',
+                    localIdentName: "[name]_[local]_[hash:base64:6]",
                   },
                 },
               },
-              { loader: 'postcss-loader' },
-              { loader: 'less-loader',
-                options:{
-                  lessOptions:{
-                    javascriptEnabled:true
-                  }
-                }
+              { loader: "postcss-loader" },
+              {
+                loader: "less-loader",
+                options: {
+                  lessOptions: {
+                    javascriptEnabled: true,
+                  },
+                },
               },
             ],
             include: /src/,
@@ -79,15 +80,18 @@ module.exports = {
            */
           {
             test: /\.(css|less)$/,
-            use: [{ loader: 'style-loader' }, 
-                  { loader: 'css-loader' },
-                  { loader: 'less-loader',
-                    options:{
-                      lessOptions:{
-                      javascriptEnabled:true
-                    }
-                  }
-              }],
+            use: [
+              { loader: "style-loader" },
+              { loader: "css-loader" },
+              {
+                loader: "less-loader",
+                options: {
+                  lessOptions: {
+                    javascriptEnabled: true,
+                  },
+                },
+              },
+            ],
             include: /node_modules/,
           },
           /**
@@ -96,11 +100,11 @@ module.exports = {
            */
           {
             test: /\.(jpe?g|png|bmp|svg|gif|webp)$/,
-            loader: 'url-loader',
+            loader: "url-loader",
             options: {
               limit: 8 * 1024,
-              name: '[name].[hash:8].[ext]',
-			        outputPath: 'images/'
+              name: "[name].[hash:8].[ext]",
+              outputPath: "images/",
             },
             include: /src/,
           },
@@ -108,10 +112,10 @@ module.exports = {
            * 将静态资源 图片、视频、字体文件等，在进行一些处理后（主要是文件名和路径），移动到打包后的目录中
            */
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              outputPath: 'asset/',
-              name: '[name].[hash].[ext]',
+              outputPath: "asset/",
+              name: "[name].[hash].[ext]",
             },
             exclude: /\.(css|less|json|jsx?|tsx?)$/,
           },
@@ -122,37 +126,37 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       // 指定生成的文件所依赖哪一个html文件模板，模板类型可以是html、jade、ejs等
-      template: './src/index.html',
-      favicon: './src/favicon.ico',
+      template: "./src/index.html",
+      favicon: "./src/favicon.ico",
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[contenthash:8].css',
+      filename: "css/[name].[contenthash:8].css",
     }),
     new HappyPack({
       /*
        * 必须配置
        */
       // id 标识符，要和 rules 中指定的 id 对应起来
-      id: 'babel',
+      id: "babel",
       // 需要使用的 loader，用法和 rules 中 Loader 配置一样
       // 可以直接是字符串，也可以是对象形式
-      loaders: ['babel-loader?cacheDirectory']
-    })
+      loaders: ["babel-loader?cacheDirectory"],
+    }),
   ],
   resolve: {
     // 在导入语句没带文件后缀时，Webpack 会自动带上后缀后去尝试访问文件是否存在。
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+    extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     alias: {
-      '@': resolve(__dirname, '../src'),
-      '@mock': resolve(__dirname, '../mock'),
-      '@assets': resolve(__dirname, '../src/assets'),
-      '@components': resolve(__dirname, '../src/components'),
-      '@config': resolve(__dirname, '../src/config'),
-      '@utils': resolve(__dirname, '../src/utils'),
-      '@pages': resolve(__dirname, '../src/pages'),
-      '@styles': resolve(__dirname, '../src/styles'),
-      '@router': resolve(__dirname, '../src/router'),
-      '@redux': resolve(__dirname, '../src/redux'),
+      "@": resolve(__dirname, "../src"),
+      "@mock": resolve(__dirname, "../mock"),
+      "@assets": resolve(__dirname, "../src/assets"),
+      "@components": resolve(__dirname, "../src/components"),
+      "@config": resolve(__dirname, "../src/config"),
+      "@utils": resolve(__dirname, "../src/utils"),
+      "@pages": resolve(__dirname, "../src/pages"),
+      "@styles": resolve(__dirname, "../src/styles"),
+      "@router": resolve(__dirname, "../src/router"),
+      "@redux": resolve(__dirname, "../src/redux"),
     },
   },
 };

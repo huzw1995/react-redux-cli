@@ -1,11 +1,11 @@
-const { resolve } = require('path');
-const webpack = require('webpack');
-const baseConfig = require('./webpack.base.js');
-const { merge } = require('webpack-merge');
+const { resolve } = require("path");
+const webpack = require("webpack");
+const baseConfig = require("./webpack.base.js");
+const { merge } = require("webpack-merge");
 
 module.exports = merge(baseConfig, {
-  mode: 'development', // 开发模式
-  devtool: 'cheap-module-eval-source-map',
+  mode: "development", // 开发模式
+  devtool: "cheap-module-eval-source-map",
   plugins: [
     // 模块热更新
     new webpack.HotModuleReplacementPlugin(),
@@ -13,7 +13,7 @@ module.exports = merge(baseConfig, {
     new webpack.NamedModulesPlugin(),
   ],
   devServer: {
-    contentBase: resolve(__dirname, '../dist'),
+    contentBase: resolve(__dirname, "../dist"),
     port: 3000,
     open: true,
     hot: true,
