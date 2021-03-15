@@ -13,6 +13,16 @@
         "legacy": true
       }
     ],
+    [
+      "@emotion",
+      {
+        // sourceMap is on by default but source maps are dead code eliminated in production
+        "sourceMap": true,
+        "autoLabel": "dev-only",
+        "labelFormat": "[local]",
+        "cssPropOptimization": true
+      }
+    ],
     "@babel/plugin-transform-runtime",
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-proposal-export-default-from",
@@ -21,7 +31,7 @@
     [
       "import", 
       {
-      "libraryName": "antd-mobile",
+      "libraryName": "antd",
       "libraryDirectory": "es",
       "style": true
       }

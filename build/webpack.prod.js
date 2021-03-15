@@ -8,7 +8,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = merge(baseConfig, {
   mode: "production", // 生产模式
-  devtool: "cheap-module-source-map",
+  devtool: "source-map",
   output: {
     publicPath: "./",
   },
